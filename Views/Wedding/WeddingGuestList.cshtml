@@ -1,0 +1,102 @@
+@model WeddingPlanner.Models.Wedding
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Wedding Guest List</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Bootstrap library -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">   
+    
+    <!-- Local Style Sheet -->
+    <link rel="stylesheet" type="text/css" media="screen" href="~/css/site.css" />
+
+     <script src="~/Scripts/jquery-1.6.4.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="container  border bkgd-lightblue">
+
+        <!-- Main: Begin -->
+        <div class="row">
+            <div class="col-sm-12 col-md-2 col-lg-2"></div>
+            <div class="col-sm-12 col-md-8 col-lg-8 wp-box wp-box-4">
+
+                <!-- Title: Begin -->
+                <div class="row">
+                    <div class="col-sm-12 col-md-8 col-lg-8">
+                        <h2>@Model.WedderOne.FirstName & @Model.WedderTwo.FirstName</h2>
+                    </div>
+                    <div class="col-sm-12 col-md-2 col-lg-2">
+                        <div class="ml-10 mt-20">
+                            <form asp-controller="Wedding" asp-action="Wedding" method="get">
+                                <div class="form-actions">
+                                    <button type="submit" class="btn  btn-link">Dashboard</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-2 col-lg-2">
+                        <div class="ml-10 mt-20">
+                            <form asp-controller="User" asp-action="Logout" method="post">
+                                <div class="form-actions">
+                                    <button type="submit" class="btn  btn-link">Logout</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Title: Ends -->
+
+                <!-- Wedding Date: Begin -->
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <h3>Date: @{@Model.WeddingDate.ToString("MMM dd, yyyy")}</h3>
+                    </div>
+                </div>
+                <!-- Wedding Date: Ends -->
+
+                <!-- Main: Begin -->
+                <div class="row mt-10">
+
+                    <!-- Guest List (Left): Begin -->
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div class="ml-10">
+                            <h4>Guests:</h4>
+                            <div class="ml-10">
+                                @foreach( var guest in ViewBag.GuestList)
+                                {
+                                    <h5>@guest.User.FirstName @guest.User.LastName</h5>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Guest List (Left): Ends -->
+    
+                    <!-- Google Map (Right): Begin -->
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <h4 class="text-center">Google Map</h4>
+                        <div>
+                            <!-- The link below explains how to add a google map to your web page -->
+                            <!-- https://docs.microsoft.com/en-us/aspnet/web-pages/overview/ui-layouts-and-themes/displaying-maps-in-an-aspnet-web-pages-site -->
+                            @* @Maps.GetGoogleHtml(@Model.Address, width:"400", height: "400") *@
+                        </div>
+                    </div>
+                    <!-- Google Map (Right): Ends -->
+                </div>
+                <!-- Main: Ends -->
+
+             </div>
+        </div>
+        <!-- Main: Ends -->
+
+    </div>
+</body>
+</html>

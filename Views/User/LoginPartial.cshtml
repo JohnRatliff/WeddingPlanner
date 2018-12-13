@@ -1,0 +1,42 @@
+@model Login
+
+<!-- Login Title form: Begin -->
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <h3>Login</h3>
+    </div>
+</div>
+<!-- Login Title form: Ends -->
+
+<!-- Login Form: Begin -->
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <form asp-controller="User" asp-action="LoginSave" method="post">
+            <div class="form-group">
+                <label class="col-form-label" asp-for="LoginEmail"></label>
+                <div>
+                    <input class="form-control" asp-for="LoginEmail" autofocus="LoginEmail">
+                </div>
+                <span class="color-error" asp-validation-for="LoginEmail"></span>
+            </div>
+            <div class="form-group">
+                <label class="col-form-label" asp-for="LoginPassword"></label>
+                <div>
+                    <input class="form-control" asp-for="LoginPassword">
+                </div>
+                <span class="color-error" asp-validation-for="LoginPassword"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-9 col-lg-9"></div>
+                <div class="col-sm-12 col-md-2 col-lg-2">
+                    <div class="form-action">
+                        <button type="submit" class="btn  btn-primary btn-md">Login</button>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-1 col-lg-1">
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Login Form: End -->

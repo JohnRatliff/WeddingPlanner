@@ -1,0 +1,124 @@
+@model WeddingPlanner.Models.Wedding
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Wedding New</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Bootstrap library -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">   
+    
+    <!-- Local Style Sheet -->
+    <link rel="stylesheet" type="text/css" media="screen" href="~/css/site.css" />
+
+     <!-- <script src="main.js"></script> -->
+</head>
+<body>
+    <div class="container  border bkgd-lightblue">
+
+        <!-- Main: Begin -->
+        <div class="row">
+            <div class="col-sm-12 col-md-2 col-lg-2"></div>
+            <div class="col-sm-12 col-md-8 col-lg-8 wp-box wp-box-4">
+
+                <!-- Title form: Begin -->
+                <div class="row">
+                    <div class="col-sm-12 col-md-8 col-lg-8">
+                        <h3>Add A Wedding</h3>
+                    </div>
+                    <div class="col-sm-12 col-md-2 col-lg-2">
+                        <div class="ml-10 mt-20">
+                            <form asp-controller="Wedding" asp-action="Wedding" method="get">
+                                <div class="form-actions">
+                                    <button type="submit" class="btn  btn-link">Dashboard</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-2 col-lg-2">
+                        <div class="ml-10 mt-20">
+                            <form asp-controller="User" asp-action="Logout" method="post">
+                                <div class="form-actions">
+                                    <button type="submit" class="btn  btn-link">Logout</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Title form: Ends -->
+
+                <!-- Form row: Begin -->
+                <div class="row mt-20">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <form asp-controller="Wedding" asp-action="WeddingNewSave" method="post">
+                            <!-- WedderOneUserId -->
+                            <div class="form-group">
+                                <label class="col-form-label" asp-for="WedderOneUserId"></label>
+                                <div>
+                                    <select class="form-control" asp-for="WedderOneUserId">
+                                        @foreach( var user in ViewBag.AllUsers)
+                                        {
+                                            <option value="@user.UserId">@user.FirstName @user.LastName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <span class="color-error" asp-validation-for="WedderOneUserId"></span>
+                            </div>
+
+                            <!-- WedderTwoUserId -->
+                            <div class="form-group">
+                                <label class="col-form-label" asp-for="WedderTwoUserId"></label>
+                                <div>
+                                    <select class="form-control" asp-for="WedderTwoUserId">
+                                        @foreach( var user in ViewBag.AllUsers)
+                                        {
+                                            <option value="@user.UserId">@user.FirstName @user.LastName</option>
+                                        }
+                                    </select>
+                                </div>
+                                <span class="color-error" asp-validation-for="WedderTwoUserId"></span>
+                            </div>
+
+                            <!--WeddingDate -->
+                            <div class="form-group">
+                                <label class="col-form-label" asp-for="WeddingDate"></label>
+                                <div>
+                                    <input class="form-control" asp-for="WeddingDate">
+                                </div>
+                                <span class="color-error" asp-validation-for="WeddingDate"></span>
+                            </div>
+
+                            <!-- Address -->
+                            <div class="form-group">
+                                <label class="col-form-label" asp-for="Address"></label>
+                                <div>
+                                    <input class="form-control" asp-for="Address">
+                                </div>
+                                <span class="color-error" asp-validation-for="Address"></span>
+                            </div>
+
+                            <!-- Add a Wedding Button -->
+                            <div class="form-actions">
+                                <button type="submit" class="btn  btn-primary btn-md">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- Form row: End -->
+
+
+             </div>
+        </div>
+        <!-- Main: Ends -->
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,143 @@
+@model WeddingPlanner.Models.Wedding
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Wedding</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Bootstrap library -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Add icon library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">   
+    
+    <!-- Local Style Sheet -->
+    <link rel="stylesheet" type="text/css" media="screen" href="~/css/site.css" />
+
+     <!-- <script src="main.js"></script> -->
+</head>
+<body>
+    <div class="container  border bkgd-lightblue">
+
+        <!-- Main: Begin -->
+        <div class="row">
+            <div class="col-sm-12 col-md-2 col-lg-2"></div>
+            <div class="col-sm-12 col-md-8 col-lg-8 wp-box wp-box-4">
+
+                <!-- Title form: Begin -->
+                <div class="row">
+                    <div class="col-sm-12 col-md-10 col-lg-10">
+                        <h3>Welcome to the Wedding Planner, @ViewBag.LoggedInUserFirstName</h3>
+                    </div>
+                    <div class="col-sm-12 col-md-2 col-lg-2">
+                        <div class="ml-10 mt-20">
+                            <form asp-controller="User" asp-action="Logout" method="post">
+                                <div class="form-actions">
+                                    <button type="submit" class="btn  btn-link">Logout</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Title form: Ends -->
+
+                <!-- Table of Weddings: Begin -->
+                <div class="row mt-10">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <div class="responsive tbl-scroll">
+                            <table class="table table-bordered table-striped table-hover table-condensed table-fixed">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Wedding</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Guests</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Link below has info on a tag asp routing -->
+                                    <!-- https://docs.microsoft.com/en-us/aspnet/core/mvc/views/tag-helpers/built-in/anchor-tag-helper?view=aspnetcore-2.2 -->
+                                    @foreach(var wedding in @ViewBag.AllWeddings)
+                                    {
+                                        <tr>
+                                            <!-- Wedding -->
+                                            <td><a href="/wedding/guestlist/@wedding.WeddingId">@wedding.WedderOneTwoFirstName</a></td>
+
+                                            <!-- Date -->
+                                            <td>@wedding.WeddingDate.ToString("MMM dd yyyy")</td>
+
+                                            <!-- Guests -->
+                                            <td>@wedding.GuestCount</td>
+
+                                            <!-- Action -->
+                                            @{string loggedInUserId = @ViewBag.LoggedInUserId.ToString()+",";}
+                                            @if( @ViewBag.LoggedInUserId == @wedding.CreatorUserId)
+                                             {
+                                                 <!-- Delete Wedding -->
+                                                 <!-- <td><a href="/Wedding/delete/@wedding.WeddingId">Delete</a></td> -->
+                                                 <td>
+                                                     <form action="/wedding/delete/@wedding.WeddingId" method="post">
+                                                         <div class="form-actions">
+                                                             <button type="submit" class="btn  btn-link">Delete</button>
+                                                         </div>
+                                                     </form>
+                                                 </td>
+                                             }
+                                             else if(@wedding.GuestIds.Contains(loggedInUserId))
+                                             {
+                                                 <!-- Un-RSVP:  Remove current user from this weddings guest list -->
+                                                 <td>
+                                                     <form action="/guest/unrsvp/@wedding.WeddingId/@ViewBag.LoggedInUserId" method="post">
+                                                         <div class="form-actions">
+                                                             <button type="submit" class="btn  btn-link">Un-RSVP</button>
+                                                         </div>
+                                                     </form>
+                                                 </td>
+                                             }
+                                             else
+                                             {
+                                                 <!-- RSVP:  Add the current user to this weddings guest list -->
+                                                 <td>
+                                                     <form action="/guest/rsvp/@wedding.WeddingId/@ViewBag.LoggedInUserId" method="post">
+                                                         <div class="form-actions">
+                                                             <button type="submit" class="btn  btn-link">RSVP</button>
+                                                         </div>
+                                                     </form>
+                                                 </td>
+                                             }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Table of Weddings: Ends -->
+
+                <!-- New Weddinb Button: Begins -->
+                <div class="row mt-20">
+                    <div class="col-sm-12 col-md-9 col-lg-9"></div>
+                    <div class="col-sm-12 col-md-2 col-lg-2">
+                        <!-- Edit button -->
+                        <form asp-controller="Wedding" asp-action="WeddingNew"  method="get">
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">New Wedding</button>
+                            </div>                    
+                        </form>
+                    </div>
+                <div class="col-sm-12 col-md-1 col-lg-1">                
+                <!-- New Weddinb Button: Ends -->
+
+
+             </div>
+        </div>
+        <!-- Main: Ends -->
+
+    </div>
+</body>
+</html>
